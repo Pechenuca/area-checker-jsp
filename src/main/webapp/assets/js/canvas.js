@@ -17,9 +17,6 @@ function canvasInit(coeff){
 
 function drawAxis(ctx,width,height,coeff){
     //square
-    ctx.fillRect(width - coeff, height - coeff, coeff, coeff)
-
-    //rec
     ctx.beginPath();
     ctx.moveTo(65+(3-coeff)*30,height/2);
     ctx.lineTo(65+(3-coeff)*30, 65+(3-coeff)*30);
@@ -31,11 +28,19 @@ function drawAxis(ctx,width,height,coeff){
     ctx.fill();
     ctx.stroke();
 
+    //arc
+    ctx.beginPath();
+    ctx.moveTo(width/2,height/2);
+    ctx.arc(width/2,height/2,coeff*30,Math.PI/2, Math.PI,false);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
     //triangle
     ctx.beginPath();
-    ctx.moveTo(width/2, height + coeff);
-    ctx.lineTo(width + coeff, height);
-    ctx.lineTo(width, height);
+    ctx.moveTo(width/2,height/2+30*coeff);
+    ctx.lineTo(width/2, height/2);
+    ctx.lineTo(width/2+30*coeff/2, height/2);
     ctx.closePath();
     ctx.fill();
     ctx.stroke();

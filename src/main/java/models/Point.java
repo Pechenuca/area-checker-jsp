@@ -1,62 +1,78 @@
 package models;
 
 public class Point {
-    private final double x;
-    private final double y;
-    private final double r;
-    private final boolean result;
-    private final String timeOfSending;
-    private final String timeOfExecuting;
+    private Clock clock;
+    private  double x;
+    private  double y;
+    private  double r;
+    private boolean result;
 
-    public Point(double x, double y, double r, String timeOfSending, String timeOfExecuting) {
+    public Point(double x, double y, double r) {
         this.x = x;
         this.y = y;
         this.r = r;
-        this.timeOfSending = timeOfSending;
-        this.timeOfExecuting = timeOfExecuting;
-        this.result = checkPoint(x, y, r);
+
     }
 
-    private boolean checkPoint(double x, double y, double r) {
-        return (x >= -r) && (x <= 0) && (y >= 0) && (y <= r) ||
-                ((x * x + y * y <= r * r) && (x <= 0) && (y <= 0)) ||
-                ((x >= 0) && (x <= r) && (y >= -r) && (y <= 0) && (y >= x - r));
+    public Clock getClock() {
+        return clock;
     }
 
-
-    public boolean isResult() {
-        return result;
+    public void setClock(Clock clock) {
+        this.clock = clock;
     }
-
-    public String toJson() {
-        return "[[" +
-                "\"" + x + "\"" + ',' +
-                "\"" + y + "\"" + ',' +
-                "\"" + r + "\"" + ',' +
-                "" + result + "" + ',' +
-                "\"" + timeOfSending + "\"" + ',' +
-                "\"" + timeOfExecuting + "\"" +
-                "]]";
-    }
-
 
     public double getX() {
         return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
     }
 
     public double getY() {
         return y;
     }
 
+    public void setY(double y) {
+        this.y = y;
+    }
+
     public double getR() {
         return r;
     }
 
-    public String getTimeOfSending() {
-        return timeOfSending;
+    public void setR(double r) {
+        this.r = r;
     }
 
-    public String getTimeOfExecuting() {
-        return timeOfExecuting;
+    public boolean isResult() {
+        return result;
     }
+
+    public void setResult(boolean result) {
+        this.result = result;
+    }
+    //
+//    private boolean checkPoint(double x, double y, double r) {
+//        return (x >= -r) && (x <= 0) && (y >= 0) && (y <= r) ||
+//                ((x * x + y * y <= r * r) && (x <= 0) && (y <= 0)) ||
+//                ((x >= 0) && (x <= r) && (y >= -r) && (y <= 0) && (y >= x - r));
+//    }
+
+
+//    public String toJson() {
+//        return "[[" +
+//                "\"" + x + "\"" + ',' +
+//                "\"" + y + "\"" + ',' +
+//                "\"" + r + "\"" + ',' +
+//                "" + result + "" + ',' +
+//                "\"" + timeOfSending + "\"" + ',' +
+//                "\"" + timeOfExecuting + "\"" +
+//                "]]";
+//    }
+
+
+
+
 }

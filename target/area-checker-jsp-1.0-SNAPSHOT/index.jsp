@@ -1,5 +1,6 @@
 <%@ page import="models.Point" %>
 <%@ page import="java.util.List" %>
+<%@ page import="models.TableMaker" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="ru">
 <head>
@@ -45,31 +46,7 @@
     <div>
         <canvas id="cns" width="310px" height="310px"></canvas>
     </div>
-
-    <table id="results">
-        <tbody>
-        <tr>
-            <td class="tableWithBorder">X</td>
-            <td class="tableWithBorder">Y</td>
-            <td class="tableWithBorder">R</td>
-            <td class="tableWithBorder">Result</td>
-            <td class="tableWithBorder">Time of sending</td>
-            <td class="tableWithBorder">Script working time</td>
-        </tr>
-        <%
-            List<Point> points = (List<Point>) request.getServletContext().getAttribute("points");
-            if (points != null) {
-                for (int i = 0; i < points.size(); i++) {
-                    out.println("<tr>");
-                    out.println("td class=\"tableWithBorder\"" + points.get(i).getX() + "</td>");
-                    out.println("td class=\"tableWithBorder\"" + points.get(i).getY() + "</td>");
-                    out.println("td class=\"tableWithBorder\"" + points.get(i).getR() + "</td>");
-                    out.println("td class=\"tableWithBorder\"" + points.get(i).isResult() + "</td>");
-                    out.println("td class=\"tableWithBorder\"" + points.get(i).getTimeOfSending() + "</td>");
-                    out.println("td class=\"tableWithBorder\"" + points.get(i).getTimeOfExecuting() + "</td>");
-                }
-            }
-        %>
+        <%=TableMaker.createTable(getServletConfig().getServletContext().getAttribute("answerList"))%>
         </tbody>
     </table>
     </div>

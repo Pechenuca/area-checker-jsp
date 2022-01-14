@@ -1,170 +1,3 @@
-// let ctx = document.getElementById('canvas').getContext('2d')
-// const width = ctx.canvas.width;
-// const height = ctx.canvas.height;
-// let R = height / 3;
-//
-// // side boundaries of the logical viewport
-// const maxX = 10;
-// const minX = -10;
-// const maxY = maxX * height / width;
-// const minY = minX * height / width
-//
-// // Returns the physical x-coordinate of a logical x-coordinate:
-// function getPhysicalX(x) {
-//     return (x - minX) / (maxX - minX) * width;
-// }
-//
-// // Returns the physical y-coordinate of a logical y-coordinate:
-// function getPhysicalY(y) {
-//     return height - (y - minY) / (maxY - minY) * height;
-// }
-//
-//
-// /*
-// * Taking a life the canvas
-// * */
-// function drawCanvas() {
-//     if (!ctx) {
-//         alert('your browser doesn\'t support canvas');
-//         return;
-//     }
-//
-//     ctx.clearRect(0, 0, width, height);
-//     ctx.font = '8px sans-serif';
-//     ctx.strokeStyle = "rgba(255,255,255,0.8)";
-//     ctx.fillStyle = "rgba(255,255,255,0.8)";
-//
-//     ctx.beginPath()
-//     ctx.moveTo(getPhysicalX(0), getPhysicalY(0))
-//     ctx.arc(getPhysicalX(0), getPhysicalY(0), R, Math.PI, Math.PI / 2, true);
-//     ctx.closePath()
-//     ctx.fill()
-//     ctx.stroke()
-//
-// //square in the left up
-//     ctx.fillRect(getPhysicalX(0) - R, getPhysicalY(0) - R, R, R)
-//
-// //triangle*
-//     ctx.beginPath();
-//     ctx.moveTo(getPhysicalX(0), getPhysicalY(0) + R);
-//     ctx.lineTo(getPhysicalX(0) + R, getPhysicalY(0));
-//     ctx.lineTo(getPhysicalX(0), getPhysicalY(0));
-//     ctx.closePath();
-//     ctx.fill();
-//     ctx.stroke();
-//
-//
-//     //draw Axis
-//     const limitMargin = 15;
-//     ctx.save();
-//     ctx.strokeStyle = "black";
-//     ctx.fillStyle = "black";
-//
-//     // +Y axis
-//     ctx.beginPath();
-//     ctx.moveTo(getPhysicalX(0), getPhysicalY(0));
-//     ctx.lineTo(getPhysicalX(0), getPhysicalY(maxY) + limitMargin);
-//     ctx.stroke();
-//
-//     // -Y axis
-//     ctx.beginPath();
-//     ctx.moveTo(getPhysicalX(0), getPhysicalY(0));
-//     ctx.lineTo(getPhysicalX(0), getPhysicalY(minY) - limitMargin);
-//     ctx.stroke();
-//
-//     // +X axis
-//     ctx.beginPath();
-//     ctx.moveTo(getPhysicalX(0), getPhysicalY(0));
-//     ctx.lineTo(getPhysicalX(maxX) + limitMargin, getPhysicalY(0));
-//     ctx.stroke();
-//
-//     // -X axis
-//     ctx.beginPath();
-//     ctx.moveTo(getPhysicalX(0), getPhysicalY(0));
-//     ctx.lineTo(getPhysicalX(minX) - limitMargin, getPhysicalY(0));
-//     ctx.stroke();
-//
-//     // axis names and arrows
-//     ctx.fillText('X', width - limitMargin, getPhysicalY(0) - 3)
-//     ctx.fillText('Y', getPhysicalX(0) - 10, maxY + limitMargin)
-//
-//     // drawing tick marks
-//     let valR = $('input[name="r"]:checked').val();
-//     const startTickX = width / 1.95, finishTickX = width / 2.05;
-//     const startTickY = height / 1.9, finishTickY = height / 2.1;
-//
-//     // Y axis tick marks
-//     ctx.fillText(-valR / 2, width / 2.05 + 8, getPhysicalY(0) + R / 2 + 2)
-//     ctx.fillText(-valR, width / 2.05 + 8, getPhysicalY(0) + R + 2)
-//     ctx.fillText(valR / 2, width / 2.05 + 8, getPhysicalY(0) - R / 2 + 2)
-//     ctx.fillText(valR, width / 2.05 + 8, getPhysicalY(0) - R + 2)
-//     ctx.beginPath();
-//     ctx.moveTo(startTickX, getPhysicalY(0) + R);
-//     ctx.lineTo(finishTickX, getPhysicalY(0) + R);
-//     ctx.stroke();
-//     ctx.beginPath();
-//     ctx.moveTo(startTickX, getPhysicalY(0) + R / 2);
-//     ctx.lineTo(finishTickX, getPhysicalY(0) + R / 2);
-//     ctx.stroke();
-//     ctx.beginPath();
-//     ctx.moveTo(startTickX, getPhysicalY(0) - R);
-//     ctx.lineTo(finishTickX, getPhysicalY(0) - R);
-//     ctx.stroke();
-//     ctx.beginPath();
-//     ctx.moveTo(startTickX, getPhysicalY(0) - R / 2);
-//     ctx.lineTo(finishTickX, getPhysicalY(0) - R / 2);
-//     ctx.stroke();
-//
-//     // X tick marks
-//     ctx.fillText(-valR / 2, getPhysicalX(0) - R / 2 - 6, height / 2.2)
-//     ctx.fillText(-valR, getPhysicalX(0) - R - 3, height / 2.2)
-//     ctx.fillText(valR / 2, getPhysicalX(0) + R / 2 - 6, height / 2.2)
-//     ctx.fillText(valR, getPhysicalX(0) + R - 3, height / 2.2)
-//     ctx.beginPath();
-//     ctx.moveTo(getPhysicalX(0) + R, startTickY);
-//     ctx.lineTo(getPhysicalX(0) + R, finishTickY);
-//     ctx.stroke();
-//     ctx.beginPath();
-//     ctx.moveTo(getPhysicalX(0) + R / 2, startTickY);
-//     ctx.lineTo(getPhysicalX(0) + R / 2, finishTickY);
-//     ctx.stroke();
-//     ctx.beginPath();
-//     ctx.moveTo(getPhysicalX(0) - R, startTickY);
-//     ctx.lineTo(getPhysicalX(0) - R, finishTickY);
-//     ctx.stroke();
-//     ctx.beginPath();
-//     ctx.moveTo(getPhysicalX(0) - R / 2, startTickY);
-//     ctx.lineTo(getPhysicalX(0) - R / 2, finishTickY);
-//     ctx.stroke();
-//
-//     drawPoints();
-// }
-//
-//
-// function drawPoint(x, y, result) {
-//     let canvas = document.getElementById("canvas"),
-//         context = canvas.getContext("2d");
-//     if (result === "false") {
-//         context.fillStyle = "#FF2A1F";
-//     } else {
-//         context.fillStyle = "#5FFF33";
-//     }
-//     context.beginPath();
-//     context.arc(x, y, 5, 0, 2 * Math.PI);
-//     context.fill();
-//     context.stroke();
-//     context.closePath();
-// }
-// function drawPoints() {
-//     let Xs = Array.from(document.getElementsByClassName("the_X")).map(v => v.innerHTML);
-//     let Ys = Array.from(document.getElementsByClassName("the_Y")).map(v => v.innerHTML);
-//     let Rs = Array.from(document.getElementsByClassName("the_R")).map(v => v.innerHTML);
-//     let Results = Array.from(document.getElementsByClassName("the_Result")).map(v => v.innerHTML);
-//     for (let i = 0; i < Xs.length; i++) {
-//         drawPoint(Xs[i] / Rs[i] * 400 / 2 + 250, Ys[i] / Rs[i] * (-400) / 2 + 250, Results[i]);
-//     }
-// }
-//
 let r_value;
 function canvasInit(coeff){
     let canvas = document.getElementById("cns");
@@ -184,9 +17,6 @@ function canvasInit(coeff){
 
 function drawAxis(ctx,width,height,coeff){
     //square
-    ctx.fillRect(width - coeff, height - coeff, coeff, coeff)
-
-    //rec
     ctx.beginPath();
     ctx.moveTo(65+(3-coeff)*30,height/2);
     ctx.lineTo(65+(3-coeff)*30, 65+(3-coeff)*30);
@@ -198,11 +28,19 @@ function drawAxis(ctx,width,height,coeff){
     ctx.fill();
     ctx.stroke();
 
+    //arc
+    ctx.beginPath();
+    ctx.moveTo(width/2,height/2);
+    ctx.arc(width/2,height/2,coeff*30,Math.PI/2, Math.PI,false);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
     //triangle
     ctx.beginPath();
-    ctx.moveTo(width/2, height + coeff);
-    ctx.lineTo(width + coeff, height);
-    ctx.lineTo(width, height);
+    ctx.moveTo(width/2,height/2+30*coeff);
+    ctx.lineTo(width/2, height/2);
+    ctx.lineTo(width/2+30*coeff/2, height/2);
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
