@@ -1,4 +1,3 @@
-<%@ page import="models.Point" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -30,7 +29,7 @@
                     <option value="3">3</option>
                 </select>
 
-            <p class="variable"> Y= <input id="y_value" type="text" name="Y-input" onkeyup="validateY()"><br></p>
+            <p class="variable"> Y= <input id="y_value" type="text" name="Y-input" onkeyup="checkY()"><br></p>
 
             <p class="r_value_field"> R=
                 <input type="button" name="r" value="1" onclick="press(this)">
@@ -39,7 +38,7 @@
                 <input type="button" name="r" value="4" onclick="press(this)">
                 <input type="button" name="r" value="5" onclick="press(this)">
             </p>
-            <button id="checkButton" style="width: 100px; height: 30px">SEND</button>
+            <button type="submit" id="checkButton" style="width: 100px; height: 30px">SEND</button>
 
         </form>
     </div>
@@ -51,6 +50,7 @@
 </table>
 </div>
 </table>
+<td colspan="6" id="outputContainer">
 <table id="outputTable" class="outputStub" cellpadding="13.8%">
     <tr>
         <td>x</td>
@@ -71,6 +71,7 @@
     <%}%>
     <%}%>
 </table>
+</td>
 <script src="assets/js/jquery-3.6.0.min.js"></script>
 <script src="assets/js/canvas.js"></script>
 <script src="assets/js/scripts.js"></script>

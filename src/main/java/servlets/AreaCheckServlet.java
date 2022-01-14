@@ -2,6 +2,7 @@ package servlets;
 
 import models.Point;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,19 +33,16 @@ public class AreaCheckServlet extends HttpServlet {
                 tableRows.add(new Point(x, Double.parseDouble(y), r, (long) getServletContext().getAttribute("startTime")).toHtmlCode());
                 writer.println(tableRows.get(tableRows.size() - 1));
             } else resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
+        } catch (ServletException e) {
+            e.printStackTrace();
         }
     }
 
     private boolean checkData(double x, double y, double r, String key) {
         Double[] xValues = {-3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0};
         Double[] rValues = {1.0, 2.0, 3.0, 4.0, 5.0};
-        if (key.equals("button")) {
-            return (Arrays.asList(xValues).contains(x) && (y > -5 && y < 5) && Arrays.asList(rValues).contains(r));
-        }
-        else if (key.equals("svg")){
-            return Arrays.asList(rValues).contains(r);
-        }
-        else return false;
+        return Arrays.asList(xValues).contains(x) && (y > -3 && y < 3) && Arrays.asList(rValues).contains(r);
     }
     public static double roundDown6(double d) {
         return Math.floor(d * 1e6) / 1e6;

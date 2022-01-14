@@ -1,5 +1,6 @@
 package servlets;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,27 +16,27 @@ public class ControllerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
-            long startTime = System.currentTimeMillis();
-            getServletContext().setAttribute("startTime", startTime);
-            double x = getValue(req, "x");
-            getValue(req, "y");
-            double r = getValue(req, "r_value");
-            String key = req.getParameter("key");
-            if(key.equals("button")){
+            if (req.getParameter("x")!=null && req.getParameter("y")!=null && req.getParameter("r")!=null) {
+                long startTime = System.currentTimeMillis();
+                getServletContext().setAttribute("startTime", startTime);
+
+                double x = Double.parseDouble(req.getParameter("x"));
+                Double.parseDouble(req.getParameter("y"));
+                double r = Double.parseDouble(req.getParameter("r"));
                 if (!xValues.contains(x)) {
                     throw new Exception("Неверный X!");
                 }
                 if (!rValues.contains(r)) {
                     throw new Exception("Неверный R!");
                 }
+                getServletContext().getRequestDispatcher("/areaChecker").forward(req, resp);
             }
-            getServletContext().getRequestDispatcher("/areaChecker").forward(req, resp);
         } catch (Exception e) {
             resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
         }
     }
-
-    public double getValue(HttpServletRequest request, String parameter) {
-        return Double.parseDouble(request.getParameter(parameter).replace(",", "."));
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        getServletContext().getRequestDispatcher("/index.jsp").forward(req, resp);
     }
 }

@@ -17,9 +17,9 @@ public class Point {
     }
 
     private boolean checkCoordinates(double x, double y, double r) {
-        return  (x >= 0) && (x <= r/2) && (y >= -r) && (y <= 0) ||
-                (x <= 0) && (y >= 0) && (y <= (r + x)/2) ||
-                (x*x + y*y <= r*r/4) && (x <= 0) && (y <= 0);
+        return (x >= -r) && (x <= 0) && (y >= 0) && (y <= r) ||
+                ((x * x + y * y <= r * r) && (x <= 0) && (y <= 0)) ||
+                ((x >= 0) && (x <= r) && (y >= -r) && (y <= 0) && (y >= x - r));
     }
 
 
