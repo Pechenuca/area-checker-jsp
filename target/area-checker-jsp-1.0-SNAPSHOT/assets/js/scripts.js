@@ -1,25 +1,7 @@
-let rButtonValue = 0
-let previousButton = null
+let rButtonValue = 0;
+let previousButton = null;
+let x, y, r;
 
-function checkY(){
-    document.querySelector('#y_value').addEventListener('keyup',function(){
-        let reg = /[^(\-?(\d\.))]/;
-        let c = parseFloat(this.value);
-        if(this.value.search(reg)!==-1 || c < -3 || c > 3){
-            this.value = "";
-        }
-    })
-}
-
-function checkData() {
-    let x = document.getElementById('selectX').value
-    let y_check = parseFloat(document.getElementById("y_value").value.substring(0, 12).replace(',', '.'));
-    let y = !isNaN(y_check) && y_check >= -3 && y_check <= 3;
-    let r = rButtonValue !== 0;
-    console.log(x,y,rButtonValue, "checkData");
-
-    return x && y && r;
-}
 function press(button) {
     $(previousButton).css('background', '#ffffff');
     $(button).css('background', '#c94a4a');
@@ -28,79 +10,52 @@ function press(button) {
     changeCanvas(rButtonValue);
 }
 
-
-
-// function addRow(x, y, r, result, time, delta) {
-//     let tbody = document.getElementById("results").getElementsByTagName("tbody")[0];
-//     let row = document.createElement("tr");
-//
-//     let tdX = document.createElement("td");
-//     tdX.appendChild(document.createTextNode(x));
-//
-//     let tdY = document.createElement("td");
-//     tdY.appendChild(document.createTextNode(y));
-//
-//     let tdR = document.createElement("td");
-//     tdR.appendChild(document.createTextNode(r));
-//
-//     let tdResult = document.createElement("td");
-//     tdResult.appendChild(document.createTextNode(result));
-//
-//     let tdTime = document.createElement("td");
-//     tdTime.appendChild(document.createTextNode(time));
-//
-//     let tdDelta = document.createElement("td");
-//     tdDelta.appendChild(document.createTextNode(delta));
-//
-//     row.appendChild(tdX);
-//     row.appendChild(tdY);
-//     row.appendChild(tdR);
-//     row.appendChild(tdResult);
-//     row.appendChild(tdTime);
-//     row.appendChild(tdDelta);
-//     tbody.appendChild(row);
-// }
-
-function getData() {
-    let data = "x=" + document.getElementById("selectX").value
-    data += "&y=" + parseFloat(document.getElementById("y_value").value.substring(0, 5).replace(',', '.'));
-    data += "&r=" + rButtonValue;
-    console.log(data + "getData")
-    return data;
-
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("button").addEventListener("click", submit);
-});
-let submit = function (e) {
-    if (!checkY()) {
-        e.preventDefault();
+document.getElementById("checkButton").onclick = function () {
+    if (validateY()) {
+        sendRequest("button");
     }
+};
+
+//Параметр key установливает, тип запроса обработки точки на сервере: "button" - для клика по кнопке, "svg" - для клика по канвасу.
+function sendRequest(key) {
+    const keys = ["button", "svg"];
+    if (keys.includes(key)) {
+        fetch(createRequest(key)).then(response => response.text()).then(serverAnswer => {
+            document.getElementById("outputTable").innerHTML = document.getElementById("outputTable").innerHTML + serverAnswer;
+        }).catch(err => alert("Ошибка HTTP. Повторите попытку позже. " + err));
+    } else throw new Error("Не указан способ отправки");
 }
-// $('#form_send').on('submit', function (event) {
-//     if (checkData()) {
-//         let str = getData();
-//         event.preventDefault();
-//         submit(str);
-//     } else {
-//         alert(getData());
-//     }
-//
-// });
-//
-// function submit(str) {
-//     $.ajax({
-//         url: '/lab2/filter',
-//         type: 'GET',
-//         data: str,
-//         dataType: 'json',
-//         success: function(data){
-//             // addRow(data[0][0], data[0][1], data[0][2], data[0][3], data[0][4], data[0][5]);
-//             drawPoint(data[0][0], data[0][1],data[0][3]);
-//         },
-//         error: function(data) {
-//             alert("error");
-//         }
-//     });
-// }
+
+function createRequest(key) {
+    console.log(r)
+    let path = 'controller?x='
+        + encodeURIComponent(x) + '&y='
+        + encodeURIComponent(y.substring(0, 6)) + '&r='
+        + r + '&key='
+        + encodeURIComponent(key);
+    console.log(r)
+    let header = new Headers();
+    header.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8')
+    let init = {method: 'GET', headers: header};
+    return new Request(path, init);
+}
+
+function validateY() {
+    y = document.querySelector("input[name=Y-input]").value.replace(",", "."); //замена разделителя дробной части числа
+    y = y.substring(0, 6);
+    if (y === undefined) {
+        alert("Y не введён");
+        return false;
+    } else if (!isNumeric(y)) {
+        alert("Y не число");
+        return false;
+    } else if (!((y > -3) && (y < 3))) {
+        alert("Y не входит в область допустимых значений");
+        return false;
+    } else return true;
+}
+
+
+function isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}

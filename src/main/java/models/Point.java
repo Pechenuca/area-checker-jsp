@@ -1,78 +1,36 @@
 package models;
 
+import java.util.Date;
+
 public class Point {
-    private Clock clock;
-    private  double x;
-    private  double y;
-    private  double r;
-    private boolean result;
 
-    public Point(double x, double y, double r) {
+    private final double x, y, r;
+    private final boolean coordsStatus;
+    private final double workingTime;
+
+    public Point(double x, double y, double r, long startTime) {
         this.x = x;
         this.y = y;
         this.r = r;
-
+        coordsStatus = checkCoordinates(x, y, r);
+        workingTime = System.currentTimeMillis() - startTime;
     }
 
-    public Clock getClock() {
-        return clock;
+    private boolean checkCoordinates(double x, double y, double r) {
+        return  (x >= 0) && (x <= r/2) && (y >= -r) && (y <= 0) ||
+                (x <= 0) && (y >= 0) && (y <= (r + x)/2) ||
+                (x*x + y*y <= r*r/4) && (x <= 0) && (y <= 0);
     }
 
-    public void setClock(Clock clock) {
-        this.clock = clock;
+
+    public String toHtmlCode() {
+        return "<tr>" +
+                "<td>" + x + "</td>" +
+                "<td>" + y + "</td>" +
+                "<td>" + r + "</td>" +
+                "<td style='color: " + ((coordsStatus) ? "green" : "red") + "'>" + coordsStatus + "</td>" +
+                "<td>" + new Date() + "</td>" +
+                "<td>" + workingTime + "</td>" +
+                "</tr>";
     }
-
-    public double getX() {
-        return x;
-    }
-
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
-
-    public double getR() {
-        return r;
-    }
-
-    public void setR(double r) {
-        this.r = r;
-    }
-
-    public boolean isResult() {
-        return result;
-    }
-
-    public void setResult(boolean result) {
-        this.result = result;
-    }
-    //
-//    private boolean checkPoint(double x, double y, double r) {
-//        return (x >= -r) && (x <= 0) && (y >= 0) && (y <= r) ||
-//                ((x * x + y * y <= r * r) && (x <= 0) && (y <= 0)) ||
-//                ((x >= 0) && (x <= r) && (y >= -r) && (y <= 0) && (y >= x - r));
-//    }
-
-
-//    public String toJson() {
-//        return "[[" +
-//                "\"" + x + "\"" + ',' +
-//                "\"" + y + "\"" + ',' +
-//                "\"" + r + "\"" + ',' +
-//                "" + result + "" + ',' +
-//                "\"" + timeOfSending + "\"" + ',' +
-//                "\"" + timeOfExecuting + "\"" +
-//                "]]";
-//    }
-
-
-
-
 }

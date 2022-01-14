@@ -2,7 +2,7 @@
 <project version="4">
   <component name="SshConfigs">
     <configs>
-      <sshConfig authType="PASSWORD" host="se.ifmo.ru" id="88c37f91-76bf-405b-b394-77ef1191c861" port="2222" nameFormat="DESCRIPTIVE" username="s282351" />
+      <sshConfig authType="PASSWORD" connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="se.ifmo.ru" id="88c37f91-76bf-405b-b394-77ef1191c861" port="2222" nameFormat="DESCRIPTIVE" username="s282351" />
     </configs>
   </component>
 </project>
