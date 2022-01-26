@@ -40,7 +40,7 @@ public class AreaCheckServlet extends HttpServlet {
     }
 
     private boolean checkData(double x, double y, double r, String key) {
-        Double[] xValues = {-3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0};
+        Double[] xValues = {-4.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0};
         Double[] rValues = {1.0, 2.0, 3.0, 4.0, 5.0};
         return Arrays.asList(xValues).contains(x) && (y > -3 && y < 3) && Arrays.asList(rValues).contains(r);
     }

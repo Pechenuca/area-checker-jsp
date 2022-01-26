@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ControllerServlet extends HttpServlet {
 
-    private final List<Double> xValues = Arrays.asList(-3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0);
+    private final List<Double> xValues = Arrays.asList(-4.0, -3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0, 4.0);
     private final List<Double> rValues = Arrays.asList(1.0, 2.0, 3.0, 4.0, 5.0);
 
     @Override

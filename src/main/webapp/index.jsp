@@ -20,6 +20,7 @@
         <form id="form_send" method="GET" action="">
             <p class="variable"> X=
                 <select id="selectX" name="x">
+                    <option value="-4">-4</option>
                     <option value="-3">-3</option>
                     <option value="-2">-2</option>
                     <option value="-1">-1</option>
@@ -27,6 +28,7 @@
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
+                    <option value="4">4</option>
                 </select>
 
             <p class="variable"> Y= <input id="y_value" type="text" name="Y-input" onkeyup="checkY()"><br></p>
